@@ -211,45 +211,59 @@
         <!-- Receipe Post Search -->
         <div class="receipe-post-search mb-80">
             <div class="container">
-                <form action="#" method="post">
-                    <div class="row">
+                <div class="row">
                         <div class="col-12 col-lg-3">
-                            <select name="select1" id="select1">
+                            <!--select name="select1" id="select1">
                                 <option value="1" selected>Categoria</option>
                                 <option value="1">Legumbres</option>
                                 <option value="1">Postres</option>
                                 <option value="1">Vegetarianas</option>
                                 <option value="1">Recetas Naturales</option>
                                 <option value="1">Sopas y cremas</option>
-                            </select>
+                            </select-->
                         </div>
-                        <div class="col-12 col-lg-3">
+                        <!--div class="col-12 col-lg-3">
                             <select name="select1" id="select2">
                                 <option value="1" selected>Dificultad</option>
                                 <option value="1">Fácil</option>
                                 <option value="1">Media</option>
                                 <option value="1">Difícil</option>
                             </select>
-                        </div>
+                        </div-->
                         <div class="col-12 col-lg-3">
-                            <input type="search" name="search" placeholder="Buscar receta">
+                            <input class="form-control" id="textSearch" placeholder="Buscar receta">
                         </div>
-                        <div class="col-12 col-lg-3 text-right">
-                            <button type="submit" class="btn delicious-btn">Buscar</button>
+                        <div class="col-12 col-lg-3 ">
+                            <button class="btn btn-success" id="buttonSearch">Buscar</button>
                         </div>
                     </div>
-                </form>
             </div>
         </div>
+
+            <!-- ##### Best Receipe Area Start ##### -->
+        <section class="best-receipe-area">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="section-heading">
+                            <h3>Resultado de busqueda</h3>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row" id="resultSearch">
+
+                </div>
+            </div>
+        </section>
+
 
         <!-- Receipe Slider -->
         <div class="container">
             <div class="row">
                 <div class="col-12">
-                    <div class="receipe-slider owl-carousel">
-                        <img src="img/bg-img/bg5.jpg" alt="">
-                        <img src="img/bg-img/bg5.jpg" alt="">
-                        <img src="img/bg-img/bg5.jpg" alt="">
+                    <div class="receipe-slider owl-carousel" id="mainImg">
+                        
                     </div>
                 </div>
             </div>
@@ -312,56 +326,10 @@
 
                     <!-- Ingredients -->
                     <div class="col-12 col-lg-4">
-                        <div class="ingredients">
+                        <div class="ingredients" id="ings">
                             <h4>Ingredientes</h4>
 
-                            <!-- Custom Checkbox -->
-                            <div class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input" id="customCheck1">
-                                <label class="custom-control-label" for="customCheck1">4 Tbsp (57 gr) butter</label>
-                            </div>
-
-                            <!-- Custom Checkbox -->
-                            <div class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input" id="customCheck2">
-                                <label class="custom-control-label" for="customCheck2">2 large eggs</label>
-                            </div>
-
-                            <!-- Custom Checkbox -->
-                            <div class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input" id="customCheck3">
-                                <label class="custom-control-label" for="customCheck3">2 yogurt containers granulated sugar</label>
-                            </div>
-
-                            <!-- Custom Checkbox -->
-                            <div class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input" id="customCheck4">
-                                <label class="custom-control-label" for="customCheck4">1 vanilla or plain yogurt, 170g container</label>
-                            </div>
-
-                            <!-- Custom Checkbox -->
-                            <div class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input" id="customCheck5">
-                                <label class="custom-control-label" for="customCheck5">2 yogurt containers unbleached white flour</label>
-                            </div>
-
-                            <!-- Custom Checkbox -->
-                            <div class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input" id="customCheck6">
-                                <label class="custom-control-label" for="customCheck6">1.5 yogurt containers milk</label>
-                            </div>
-
-                            <!-- Custom Checkbox -->
-                            <div class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input" id="customCheck7">
-                                <label class="custom-control-label" for="customCheck7">1/4 tsp cinnamon</label>
-                            </div>
-
-                            <!-- Custom Checkbox -->
-                            <div class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input" id="customCheck8">
-                                <label class="custom-control-label" for="customCheck8">1 cup fresh blueberries </label>
-                            </div>
+                            
                         </div>
                     </div>
                 </div>
@@ -519,6 +487,37 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
     <script src="js/plugins/plugins.js"></script>
     <!-- Active js -->
     <script src="js/active.js"></script>
+    
+    <script src="data.js"></script>
+
+    <script type="text/javascript">
+
+        $(document).ready(function(){
+            $("#buttonSearch").click(function(){
+                var s = $("#textSearch").val();
+                if(s.length >=10) s = "fideos,arroz,pollo";
+                var allcount = (data[s].hits).length;
+                $("#resultSearch").empty();
+                $("#mainImg").empty();
+                $("#ing").empty();
+                for(var i=0;i<allcount && i<9;i++){
+                    var title = (data[s].hits)[i].recipe.label;
+                    var img = (data[s].hits)[i].recipe.image;
+                    $("#resultSearch").append('<div class="col-12 col-sm-6 col-lg-4"><div class="single-best-receipe-area mb-30"><img src='+img+' alt=""><div class="receipe-content"><a href="receipe-post.html"><h5>'+title+'</h5></a><div class="ratings"><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star-o" aria-hidden="true"></i></div></div></div></div>');
+                    if(i==1){
+                        var ing = (data[s].hits)[i].recipe.ingredientLines;
+                        $("#mainImg").append('<img src='+img+' alt="" height="250" width="1100">');
+                        for(var j = 0 ; j < ing.length; j++){
+                            $("#ings").append('<!-- Custom Checkbox --><div class="custom-control custom-checkbox"><input type="checkbox" class="custom-control-input" id="customCheck1"><label class="custom-control-label" for="customCheck1">'+ing[j]+'</label></div>');
+                        }
+                    }
+                }
+
+            });
+        });
+
+
+    </script>
 </body>
 
 </html>
