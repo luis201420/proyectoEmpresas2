@@ -270,19 +270,12 @@
         </div>
 
         <!-- Receipe Content Area -->
-        <div class="receipe-content-area">
+        <div class="receipe-content-area" id="mainReceipe" style="display: none;">
             <div class="container">
 
                 <div class="row">
                     <div class="col-12 col-md-8">
-                        <div class="receipe-headline my-5">
-                            <span>Abril 05, 2019</span>
-                            <h2>Ensalada de queso vegetariana</h2>
-                            <div class="receipe-duration">
-                                <h6>Prep: 15 mins</h6>
-                                <h6>Cocinar: 30 mins</h6>
-                                <h6>Rendimiento: 8 personas</h6>
-                            </div>
+                        <div class="receipe-headline my-5" id="mainTitle">
                         </div>
                     </div>
 
@@ -498,18 +491,21 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
                 if(s.length >=10) s = "fideos,arroz,pollo";
                 var allcount = (data[s].hits).length;
                 $("#resultSearch").empty();
-                $("#mainImg").empty();
-                $("#ing").empty();
                 for(var i=0;i<allcount && i<9;i++){
                     var title = (data[s].hits)[i].recipe.label;
                     var img = (data[s].hits)[i].recipe.image;
                     $("#resultSearch").append('<div class="col-12 col-sm-6 col-lg-4"><div class="single-best-receipe-area mb-30"><img src='+img+' alt=""><div class="receipe-content"><a href="receipe-post.html"><h5>'+title+'</h5></a><div class="ratings"><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star-o" aria-hidden="true"></i></div></div></div></div>');
-                    if(i==1){
+                    if(i==0){   
+                        $("#mainImg").empty();
+                        $("#ing").empty();
+                        $("#mainTitle").empty();
                         var ing = (data[s].hits)[i].recipe.ingredientLines;
+                        $("#mainTitle").append('<span>Abril 05, 2019</span><h2>'+title+'</h2><div class="receipe-duration"><h6>Prep: 15 mins</h6><h6>Cocinar: 30 mins</h6><h6>Rendimiento: 8 personas</h6></div>');
                         $("#mainImg").append('<img src='+img+' alt="" height="250" width="1100">');
                         for(var j = 0 ; j < ing.length; j++){
                             $("#ings").append('<!-- Custom Checkbox --><div class="custom-control custom-checkbox"><input type="checkbox" class="custom-control-input" id="customCheck1"><label class="custom-control-label" for="customCheck1">'+ing[j]+'</label></div>');
                         }
+                        $("#mainReceipe").show();
                     }
                 }
 
