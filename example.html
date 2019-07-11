@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<meta charset="UTF-8">
+
+<html>
+	<head>
+		<title>Ejemplo</title>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+		<script>
+			$(document).ready(function(){
+				$("#driver").click(function(event){
+					alert("a");
+               				/*$.get(
+                  				"https://test-es.edamam.com/search",
+                  				{ q: "pollo",
+						  app_id: "06bbe8f9",
+						  app_key: "a6e5821cb197ecc4cd3546d3aeaa0002",
+						  from: "0",
+						  to: "3" },
+                  				function(data) {
+							alert("b");
+                     					$('#stage').html(data);
+                  				}
+               				);*/
+					var request = new XMLHttpRequest();
+
+					request.open('GET', 'https://test-es.edamam.com/search?q=pollo&app_id=06bbe8f9&app_key=a6e5821cb197ecc4cd3546d3aeaa0002&from=0&to=3', true);
+					request.onload = function() {
+  						// Begin accessing JSON data here
+  						var data = JSON.parse(this.response);
+
+  						if (request.status >= 200 && request.status < 400) {
+    							/*data.forEach(count => {
+      								console.log(movie.title);
+    							});*/
+  						} else {
+    							console.log('error');
+  						}
+					}
+					request.send();
+            			});
+			});
+		</script>
+	</head>
+	<body>
+
+			<p>Click on the button to load result.html file −</p>
+       
+      			<span id = "stage" style = "background-color:#cc0;">
+         			STAGE
+      			</span>
+       
+      			<div><input type = "button" id = "driver"
+         			value = "Load Data" /></div>
+	</body>
+</html>
